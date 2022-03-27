@@ -1,0 +1,18 @@
+{
+  "App": {
+    "port": 3000,
+    "database": {
+      "mongoUrl": "mongodb://localhost:27017/beach-forecast"
+    },
+    "auth": {
+      "key": "some-key",
+      "tokenExpiresIn": "20000000"
+    },
+    "resources": {
+      "StormGlass": {
+        "apiUrl": "https://api.stormglass.io/v2",
+        "apiToken": "c28b3f0e-adeb-11ec-812f-0242ac130002-c28b3f7c-adeb-11ec-812f-0242ac130002"
+      }
+    }
+  }
+}
