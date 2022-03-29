@@ -19,7 +19,8 @@ describe('AuthMiddleware', () => {
 
   it('should return UNAUTHORIZED if there is a problem on the token verification', () => {
     const reqFake = {
-      headers: { //header com token inválido. deve dar erro conforme teste
+      headers: {
+        //header com token inválido. deve dar erro conforme teste
         'x-access-token': 'invalid token',
       },
     };

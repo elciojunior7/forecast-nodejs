@@ -1,5 +1,6 @@
 import { InternalError } from '@src/util/errors/internal-error';
 import * as HTTPUtil from '@src/util/request';
+import { TimeUtil } from '@src/util/time';
 import config, { IConfig } from 'config';
 
 //cada chave:valor do objeto desnormalizado da API
@@ -81,13 +82,14 @@ export class StormGlass {
   constructor(protected request = new HTTPUtil.Request()) {}
 
   public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
+    const endTimestamp = TimeUtil.getUnixTimeForAFutureDay(1);
     try {
       const response = await this.request.get<StormGlassForecastResponse>(
         `${stormglassResourceConfig.get('apiUrl')}/weather/point?params=${
           this.stormGlassAPIParams
         }&source=${
           this.stormGlassAPISource
-        }&end=1592113802&lat=${lat}&lng=${lng}`,
+        }&end=${endTimestamp}&lat=${lat}&lng=${lng}`,
         {
           headers: {
             Authorization: stormglassResourceConfig.get('apiToken'),

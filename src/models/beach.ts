@@ -1,46 +1,46 @@
-import mongoose, {Document, Model, Schema} from "mongoose";
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 // enum de pontos cardinais
-export enum BeachPosition {
-    S = 'S',
-    E = 'E',
-    W = 'W',
-    N = 'N',
+export enum GeoPosition {
+  S = 'S',
+  E = 'E',
+  W = 'W',
+  N = 'N',
 }
 
 // tipo usado para representar praia
 export interface Beach {
-    name: string;
-    position: BeachPosition;
-    lat: number;
-    lng: number;
-    user: string;
+  name: string;
+  position: GeoPosition;
+  lat: number;
+  lng: number;
+  user: string;
 }
 
 const schema = new mongoose.Schema(
-    {
-      lat: { type: Number, required: true },
-      lng: { type: Number, required: true },
-      name: { type: String, required: true },
-      position: { type: String, required: true },
-      user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    },
-    {
-      // sempre que a função toJSON for acionado, o transform vai agir
-      toJSON: {
-        // transformação aplicada nos dados devolvidos via Json
-        // deletes daqui não acontecem no banco de dados
-        transform: (_, ret): void => {
-          ret.id = ret._id;
-          delete ret._id;
-          delete ret.__v;
-        },
+  {
+    lat: { type: Number, required: true },
+    lng: { type: Number, required: true },
+    name: { type: String, required: true },
+    position: { type: String, required: true },
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  },
+  {
+    // sempre que a função toJSON for acionado, o transform vai agir
+    toJSON: {
+      // transformação aplicada nos dados devolvidos via Json
+      // deletes daqui não acontecem no banco de dados
+      transform: (_, ret): void => {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
       },
-    }
-  );
+    },
+  }
+);
 
 // interface/tipo para poder ter instâncias que mescla
-// do tipo/interface Beach (linha 12) e do 
+// do tipo/interface Beach (linha 12) e do
 // Document do mongoose
 interface BeachModel extends Omit<Beach, '_id'>, Document {}
 
